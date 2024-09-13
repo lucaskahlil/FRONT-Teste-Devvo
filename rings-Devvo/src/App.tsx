@@ -4,6 +4,7 @@ import { Home } from "./pages/home"
 import { Colection } from "./pages/colection"
 import { Forge } from "./pages/forge"
 import 'react-toastify/dist/ReactToastify.css';
+import 'antd/dist/reset.css';
 
 function App() {
   return (
