@@ -1,8 +1,9 @@
-import { IRingCarouselProps } from "./interface";
 import 'slick-carousel/slick/slick.css';
 import "slick-carousel/slick/slick-theme.css";
 import Slider, { CustomArrowProps } from "react-slick";
-import { RingCard } from "../../cards";
+import { ErrorCard, RingCard } from "../../cards";
+import { useGetAllRings } from "../../../hooks";
+import { Loading } from '../../loading';
 
 function NextArrow(props: CustomArrowProps) {
     const { className, style, onClick } = props;
@@ -26,7 +27,9 @@ function PrevArrow(props: CustomArrowProps) {
     );
 }
 
-export function RingCarousel({ rings }: IRingCarouselProps) {
+export function RingCarousel() {
+    const { rings, loading, AllRingsError } = useGetAllRings();
+
     const settings = {
         dots: true,
         infinite: true,
@@ -46,6 +49,14 @@ export function RingCarousel({ rings }: IRingCarouselProps) {
         ]
     };
 
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (AllRingsError) {
+        return <ErrorCard message={AllRingsError} />;
+    }
+
     return (
         <>
             <Slider {...settings} className="overflow-hidden">
@@ -55,7 +66,6 @@ export function RingCarousel({ rings }: IRingCarouselProps) {
                     </div>
                 ))}
             </Slider>
-
         </>
     );
 }
