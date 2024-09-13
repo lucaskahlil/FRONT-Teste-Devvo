@@ -20,8 +20,35 @@ export const apiRings = {
       );
       return response.data;
     } catch (error) {
-      console.error(error);
-      throw new Error("Erro ao buscar anel");
+      if (error instanceof AxiosError) {
+        switch (error.response?.status) {
+          case 400:
+            // Bad Request
+            throw new Error("Dados inválidos. Verifique e tente novamente.");
+          case 401:
+            // Unauthorized
+            throw new Error("Não autorizado. Faça login novamente.");
+          case 404:
+            // Not Found
+            throw new Error(
+              "Falha ao conectar com o servidor. Tente novamente mais tarde."
+            );
+          case 500:
+            // Internal Server Error
+            throw new Error(
+              "Erro interno do servidor. Tente novamente mais tarde."
+            );
+          default:
+            // Outros erros
+            throw new Error(
+              error.response?.data?.message ||
+                "Erro desconhecido ao procurar o anel"
+            );
+        }
+      } else {
+        // Erro desconhecido
+        throw new Error("Erro desconhecido ao criar anel");
+      }
     }
   },
 
