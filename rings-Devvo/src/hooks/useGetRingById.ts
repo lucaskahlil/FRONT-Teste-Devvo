@@ -3,17 +3,16 @@ import { IRingDTOSchema } from "../types";
 import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
 
-export const useGetAllRings = () => {
-  const [rings, setRings] = useState<IRingDTOSchema[]>([]);
+export const useGetRingById = (id: number) => {
+  const [ring, setRing] = useState<IRingDTOSchema | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRings = async () => {
+    const fetchRing = async () => {
       try {
-        const data = await apiRings.getAllRings();
-        setRings(data);
-        toast.success("Anéis carregados com sucesso");
+        const data = await apiRings.getRingById(id);
+        setRing(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -27,8 +26,8 @@ export const useGetAllRings = () => {
       }
     };
 
-    fetchRings();
-  }, []);
+    fetchRing();
+  }, [id]);
 
-  return { rings, loading, error };
+  return { ring, loading, error };
 };
