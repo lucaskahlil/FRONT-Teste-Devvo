@@ -7,15 +7,7 @@ export const RingFormSchema = z.object({
   ringBearer: z.string(),
   forger: z.string(),
   type: TypeRingEnum,
-  image: z.instanceof(File).refine(
-    (file) => {
-      const validExtensions = ["image/jpeg", "image/png"];
-      return validExtensions.includes(file.type);
-    },
-    {
-      message: "O arquivo deve ser uma imagem JPG ou PNG",
-    }
-  ),
+  image: z.union([z.instanceof(FileList), z.string()]).nullish(),
 });
 
 export type IRingFormSchema = z.infer<typeof RingFormSchema>;
