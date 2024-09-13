@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export const useGetAllRings = () => {
   const [rings, setRings] = useState<IRingDTOSchema[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [AllRingsError, setAllRingsError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRings = async () => {
@@ -16,10 +16,10 @@ export const useGetAllRings = () => {
         toast.success("Anéis carregados com sucesso");
       } catch (err: unknown) {
         if (err instanceof Error) {
-          setError(err.message);
+          setAllRingsError(err.message);
           toast.error(err.message);
         } else {
-          setError("Erro desconhecido");
+          setAllRingsError("Erro desconhecido");
           toast.error("Erro desconhecido");
         }
       } finally {
@@ -30,5 +30,5 @@ export const useGetAllRings = () => {
     fetchRings();
   }, []);
 
-  return { rings, loading, error };
+  return { rings, loading, AllRingsError };
 };
