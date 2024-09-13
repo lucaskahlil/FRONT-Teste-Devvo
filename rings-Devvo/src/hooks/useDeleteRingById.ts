@@ -3,27 +3,27 @@ import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
 
 export const useDeleteRing = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isDeleteloading, setIsDeleteLoading] = useState<boolean>(false);
+  const [errorDelete, setErrorDelete] = useState<string | null>(null);
 
   const deleteRing = async (id: number) => {
-    setLoading(true);
+    setIsDeleteLoading(true);
     try {
       await apiRings.deleteRing(id);
       toast.success("Anel deletado com sucesso");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message);
+        setErrorDelete(err.message);
         toast.error(err.message);
       } else {
-        setError("Erro desconhecido");
+        setErrorDelete("Erro desconhecido");
         toast.error("Erro desconhecido");
       }
       throw err;
     } finally {
-      setLoading(false);
+      setIsDeleteLoading(false);
     }
   };
 
-  return { deleteRing, loading, error };
+  return { deleteRing, isDeleteloading, errorDelete };
 };

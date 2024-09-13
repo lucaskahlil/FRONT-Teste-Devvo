@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 
 export const useGetRingById = (id: number) => {
   const [ring, setRing] = useState<IRingDTOSchema | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isloadingRing, setisLoadingRing] = useState<boolean>(true);
+  const [errorRing, setErrorRing] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRing = async () => {
@@ -15,19 +15,19 @@ export const useGetRingById = (id: number) => {
         setRing(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          setError(err.message);
+          setErrorRing(err.message);
           toast.error(err.message);
         } else {
-          setError("Erro desconhecido");
+          setErrorRing("Erro desconhecido");
           toast.error("Erro desconhecido");
         }
       } finally {
-        setLoading(false);
+        setisLoadingRing(false);
       }
     };
 
     fetchRing();
   }, [id]);
 
-  return { ring, loading, error };
+  return { ring, isloadingRing, errorRing };
 };
