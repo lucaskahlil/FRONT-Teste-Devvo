@@ -16,10 +16,28 @@ export const useCreateRing = () => {
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
-        toast.error(err.message);
+        toast.error(`${err.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       } else {
         setError("Erro desconhecido");
-        toast.error("Erro desconhecido");
+        toast.error("Error desconhecido", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
       throw err;
     } finally {
