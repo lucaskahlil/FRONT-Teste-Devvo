@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { Home } from "./pages/home"
 import { Colection } from "./pages/colection"
 import { Forge } from "./pages/forge"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
