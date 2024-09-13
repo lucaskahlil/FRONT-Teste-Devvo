@@ -1,57 +1,65 @@
 import { AxiosResponse } from "axios";
-import { IRingDTOSchema } from "../../types";
+import { IRingDTOSchema, IRingFormSchema } from "../../types";
 import { api } from "../api";
 
 export const apiRings = {
-  getAllRings: async () => {
+  getAllRings: async (): Promise<IRingDTOSchema[]> => {
     try {
       const response: AxiosResponse<IRingDTOSchema[]> = await api.get("/rings");
       return response.data;
     } catch (error) {
-      throw alert(error);
+      console.error(error);
+      throw new Error("Erro ao buscar anéis");
     }
   },
 
-  getRingById: async (RingId: number) => {
+  getRingById: async (RingId: number): Promise<IRingDTOSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.get(
-        `/Testpatient/${RingId}`
+        `/rings/${RingId}`
       );
       return response.data;
     } catch (error) {
-      throw alert(error);
+      console.error(error);
+      throw new Error("Erro ao buscar anel");
     }
   },
 
-  createRing: async (newRing: IRingDTOSchema) => {
+  createRing: async (newRing: IRingFormSchema): Promise<IRingFormSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.post(
-        "/Testpatient",
+        "/rings",
         newRing
       );
       return response.data;
     } catch (error) {
-      throw alert(error);
+      console.error(error);
+      throw new Error("Erro ao criar anel");
     }
   },
 
-  updateRing: async (RingId: number, updatedRing: IRingDTOSchema) => {
+  updateRing: async (
+    RingId: number,
+    updatedRing: IRingDTOSchema
+  ): Promise<IRingDTOSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.put(
-        `/Testpatient/${RingId}`,
+        `/rings/${RingId}`,
         updatedRing
       );
       return response.data;
     } catch (error) {
-      throw alert(error);
+      console.error(error);
+      throw new Error("Erro ao atualizar anel");
     }
   },
 
-  deleteRing: async (RingId: number) => {
+  deleteRing: async (RingId: number): Promise<void> => {
     try {
-      await api.delete(`/Testpatient/${RingId}`);
+      await api.delete(`/rings/${RingId}`);
     } catch (error) {
-      throw alert(error);
+      console.error(error);
+      throw new Error("Erro ao deletar anel");
     }
   },
 };
