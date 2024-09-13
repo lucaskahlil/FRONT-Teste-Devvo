@@ -1,9 +1,19 @@
-function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
+import { Home } from "./pages/home"
+import { Colection } from "./pages/colection"
+import { Forge } from "./pages/forge"
 
+function App() {
   return (
-    <>
-      <header className="text-red-500 border border-solid border-red-500">Projeto</header>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/colection" element={<Colection />} />
+        <Route path="/forge" element={<Forge />} />
+      </Routes>
+      <ToastContainer />
+    </BrowserRouter>
   )
 }
 
