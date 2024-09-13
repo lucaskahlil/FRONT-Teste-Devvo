@@ -8,6 +8,15 @@
   box-sizing: border-box;
 }
 
+.slick-slide > div {
+  margin: 0 10px;
+}
+
+.slick-slide {
+  display: flex !important;
+  justify-content: center;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
