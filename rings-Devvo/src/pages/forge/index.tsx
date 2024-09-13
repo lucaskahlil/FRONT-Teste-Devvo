@@ -1,5 +1,5 @@
 import backgroundImage from '../../assets/BackgroundForja.png';
-import { RingForm } from '../../components/forms';
+import RingForm from '../../components/forms/RingForm';
 import { Header } from '../../components/header';
 
 export function Forge() {
