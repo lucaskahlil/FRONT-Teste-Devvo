@@ -7,6 +7,7 @@ export const RingFormSchema = z.object({
   ringBearer: z.string(),
   forger: z.string(),
   type: TypeRingEnum,
+  image: z.string().url(),
 });
 
 export type IRingFormSchema = z.infer<typeof RingFormSchema>;

@@ -5,7 +5,7 @@ import { api } from "../api";
 export const apiRings = {
   getAllRings: async (): Promise<IRingDTOSchema[]> => {
     try {
-      const response: AxiosResponse<IRingDTOSchema[]> = await api.get("/rings");
+      const response: AxiosResponse<IRingDTOSchema[]> = await api.get("/ring");
       return response.data;
     } catch (error) {
       console.error(error);
@@ -13,10 +13,10 @@ export const apiRings = {
     }
   },
 
-  getRingById: async (RingId: number): Promise<IRingDTOSchema> => {
+  getRingById: async (RingId: string): Promise<IRingDTOSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.get(
-        `/rings/${RingId}`
+        `/ring/${RingId}`
       );
       return response.data;
     } catch (error) {
@@ -55,7 +55,7 @@ export const apiRings = {
   createRing: async (newRing: IRingFormSchema): Promise<IRingFormSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.post(
-        "/rings",
+        "/ring",
         newRing
       );
       return response.data;
@@ -92,12 +92,12 @@ export const apiRings = {
   },
 
   updateRing: async (
-    RingId: number,
+    RingId: string,
     updatedRing: IRingDTOSchema
   ): Promise<IRingDTOSchema> => {
     try {
-      const response: AxiosResponse<IRingDTOSchema> = await api.put(
-        `/rings/${RingId}`,
+      const response: AxiosResponse<IRingDTOSchema> = await api.patch(
+        `/ring/${RingId}`,
         updatedRing
       );
       return response.data;
@@ -107,9 +107,9 @@ export const apiRings = {
     }
   },
 
-  deleteRing: async (RingId: number): Promise<void> => {
+  deleteRing: async (RingId: string): Promise<void> => {
     try {
-      await api.delete(`/rings/${RingId}`);
+      await api.delete(`/ring/${RingId}`);
     } catch (error) {
       console.error(error);
       throw new Error("Erro ao deletar anel");

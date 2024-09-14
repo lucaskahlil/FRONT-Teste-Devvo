@@ -1,4 +1,4 @@
 export interface IEditRingFormProps {
-  ringId: number;
+  ringId: string;
   onClose?: () => void;
 }

@@ -7,7 +7,7 @@ export const useUpdateRing = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateRing = async (id: number, ring: IRingDTOSchema) => {
+  const updateRing = async (id: string, ring: IRingDTOSchema) => {
     setLoading(true);
     try {
       const data = await apiRings.updateRing(id, ring);

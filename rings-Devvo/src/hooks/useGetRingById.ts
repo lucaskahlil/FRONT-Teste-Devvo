@@ -3,7 +3,7 @@ import { IRingDTOSchema } from "../types";
 import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
 
-export const useGetRingById = (id: number) => {
+export const useGetRingById = (id: string) => {
   const [ring, setRing] = useState<IRingDTOSchema | null>(null);
   const [isloadingRing, setisLoadingRing] = useState<boolean>(true);
   const [errorRing, setErrorRing] = useState<string | null>(null);

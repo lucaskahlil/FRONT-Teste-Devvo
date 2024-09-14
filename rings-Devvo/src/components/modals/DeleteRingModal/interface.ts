@@ -1,5 +1,5 @@
 export interface IDeleteRingModalProps {
-  RingId: number;
+  RingId: string;
   isOpen?: boolean;
   onClose?: () => void;
   title?: string;

@@ -25,6 +25,7 @@ const RingForm: React.FC = () => {
                 ringBearer: "",
                 forger: "",
                 type: typeRingEnum[0],
+                image: "https://i.imgur.com/Y5dTSXU.png"
             }}
             validationSchema={RingFormSchema}
             onSubmit={async (values) => {

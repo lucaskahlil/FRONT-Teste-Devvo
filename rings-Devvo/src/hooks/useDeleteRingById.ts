@@ -6,7 +6,7 @@ export const useDeleteRing = () => {
   const [isDeleteloading, setIsDeleteLoading] = useState<boolean>(false);
   const [errorDelete, setErrorDelete] = useState<string | null>(null);
 
-  const deleteRing = async (id: number) => {
+  const deleteRing = async (id: string) => {
     setIsDeleteLoading(true);
     try {
       await apiRings.deleteRing(id);

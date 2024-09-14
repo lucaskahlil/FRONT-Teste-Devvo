@@ -38,7 +38,7 @@ export function EditRingForm({ ringId, onClose }: IEditRingFormProps) {
                 ringBearer: ring?.ringBearer || "",
                 forger: ring?.forger || "",
                 type: ring?.type || typeRingEnum[0],
-                image: ring?.image || "HUMAN",
+                image: ring?.image || "https://i.imgur.com/Y5dTSXU.png",
             }}
             validationSchema={RingFormSchema}
             onSubmit={async (values) => {

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TypeRingEnum } from "../enums";
 
 export const RingDTOSchema = z.object({
-  id: z.number().int().gt(0),
+  id: z.string(),
   name: z.string(),
   power: z.string(),
   ringBearer: z.string(),
