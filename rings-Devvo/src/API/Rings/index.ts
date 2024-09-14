@@ -9,6 +9,9 @@ export const apiRings = {
       return response.data;
     } catch (error) {
       console.error(error);
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(error.response.data.message || "Erro ao buscar anéis");
+      }
       throw new Error("Erro ao buscar anéis");
     }
   },
@@ -20,35 +23,11 @@ export const apiRings = {
       );
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        switch (error.response?.status) {
-          case 400:
-            // Bad Request
-            throw new Error("Dados inválidos. Verifique e tente novamente.");
-          case 401:
-            // Unauthorized
-            throw new Error("Não autorizado. Faça login novamente.");
-          case 404:
-            // Not Found
-            throw new Error(
-              "Falha ao conectar com o servidor. Tente novamente mais tarde."
-            );
-          case 500:
-            // Internal Server Error
-            throw new Error(
-              "Erro interno do servidor. Tente novamente mais tarde."
-            );
-          default:
-            // Outros erros
-            throw new Error(
-              error.response?.data?.message ||
-                "Erro desconhecido ao procurar o anel"
-            );
-        }
-      } else {
-        // Erro desconhecido
-        throw new Error("Erro desconhecido ao criar anel");
+      console.error(error);
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(error.response.data.message || "Erro ao buscar anel");
       }
+      throw new Error("Erro ao buscar anel");
     }
   },
 
@@ -60,34 +39,11 @@ export const apiRings = {
       );
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        switch (error.response?.status) {
-          case 400:
-            // Bad Request
-            throw new Error("Dados inválidos. Verifique e tente novamente.");
-          case 401:
-            // Unauthorized
-            throw new Error("Não autorizado. Faça login novamente.");
-          case 404:
-            // Not Found
-            throw new Error(
-              "Falha ao conectar com o servidor. Tente novamente mais tarde."
-            );
-          case 500:
-            // Internal Server Error
-            throw new Error(
-              "Erro interno do servidor. Tente novamente mais tarde."
-            );
-          default:
-            // Outros erros
-            throw new Error(
-              error.response?.data?.message || "Erro desconhecido ao criar anel"
-            );
-        }
-      } else {
-        // Erro desconhecido
-        throw new Error("Erro desconhecido ao criar anel");
+      console.error(error);
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(error.response.data.message || "Erro ao criar anel");
       }
+      throw new Error("Erro ao criar anel");
     }
   },
 
@@ -103,6 +59,11 @@ export const apiRings = {
       return response.data;
     } catch (error) {
       console.error(error);
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(
+          error.response.data.message || "Erro ao atualizar anel"
+        );
+      }
       throw new Error("Erro ao atualizar anel");
     }
   },
@@ -112,6 +73,9 @@ export const apiRings = {
       await api.delete(`/ring/${RingId}`);
     } catch (error) {
       console.error(error);
+      if (error instanceof AxiosError && error.response) {
+        throw new Error(error.response.data.message || "Erro ao deletar anel");
+      }
       throw new Error("Erro ao deletar anel");
     }
   },
