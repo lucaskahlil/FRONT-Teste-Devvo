@@ -1,29 +1,39 @@
-import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
 
+const deleteRingApi = async (id: string) => {
+  await apiRings.deleteRing(id);
+};
+
 export const useDeleteRing = () => {
-  const [isDeleteloading, setIsDeleteLoading] = useState<boolean>(false);
-  const [errorDelete, setErrorDelete] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const deleteRing = async (id: string) => {
-    setIsDeleteLoading(true);
-    try {
-      await apiRings.deleteRing(id);
-      toast.success("Anel deletado com sucesso");
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setErrorDelete(err.message);
-        toast.error(err.message);
-      } else {
-        setErrorDelete("Erro desconhecido");
-        toast.error("Erro desconhecido");
-      }
-      throw err;
-    } finally {
-      setIsDeleteLoading(false);
-    }
-  };
-
-  return { deleteRing, isDeleteloading, errorDelete };
+  return useMutation<void, Error, string>(deleteRingApi, {
+    onSuccess: () => {
+      toast.success("Anel apagado com sucesso", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      queryClient.invalidateQueries("rings");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Erro desconhecido", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    },
+  });
 };

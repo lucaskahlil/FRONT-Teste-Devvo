@@ -1,49 +1,41 @@
-import { useState } from "react";
-import { IRingFormSchema } from "../types";
+import { useMutation, useQueryClient } from "react-query";
 import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
+import { IRingFormSchema } from "../types"; // Ajuste conforme sua definição de tipos
+
+// Função para criar um anel
+const createRingApi = async (ring: IRingFormSchema): Promise<void> => {
+  await apiRings.createRing(ring);
+};
 
 export const useCreateRing = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const createRing = async (ring: IRingFormSchema) => {
-    setLoading(true);
-    try {
-      const data = await apiRings.createRing(ring);
-      toast.success("Anel criado com sucesso");
-      return data;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-        toast.error(`${err.message}`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      } else {
-        setError("Erro desconhecido");
-        toast.error("Error desconhecido", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      }
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { createRing, loading, error };
+  return useMutation<void, Error, IRingFormSchema>(createRingApi, {
+    onSuccess: () => {
+      toast.success("Anel criado com sucesso", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      queryClient.invalidateQueries("rings");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Erro desconhecido", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    },
+  });
 };

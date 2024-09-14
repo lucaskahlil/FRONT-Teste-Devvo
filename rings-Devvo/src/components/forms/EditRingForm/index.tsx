@@ -19,7 +19,7 @@ const RingFormSchema = Yup.object().shape({
 
 export function EditRingForm({ ringId, onClose }: IEditRingFormProps) {
     const { ring, isloadingRing, errorRing } = useGetRingById(ringId);
-    const { updateRing, loading } = useUpdateRing();
+    const { mutate: updateRing, isLoading } = useUpdateRing();
 
     if (isloadingRing) {
         return <Loading />;
@@ -40,12 +40,14 @@ export function EditRingForm({ ringId, onClose }: IEditRingFormProps) {
                 image: ring?.image || "https://i.imgur.com/Y5dTSXU.png",
             }}
             validationSchema={RingFormSchema}
-            onSubmit={async (values) => {
-                await updateRing(ringId, values);
-                if (onClose) {
-                    onClose();
-                }
-
+            onSubmit={(values) => {
+                updateRing({ id: ringId, ring: values }, {
+                    onSuccess: () => {
+                        if (onClose) {
+                            onClose();
+                        }
+                    },
+                });
             }}
         >
 
@@ -91,7 +93,7 @@ export function EditRingForm({ ringId, onClose }: IEditRingFormProps) {
 
                 <div className="flex flex-row align-middle justify-end gap-4">
                     <Button type="text" onClick={onClose}>Cancelar</Button>
-                    <Button loading={loading} htmlType="submit" className="bg-yellow-200 text-black hover:text-white">
+                    <Button loading={isLoading} htmlType="submit" className="bg-yellow-200 text-black hover:text-white">
                         Atualizar Anel
                     </Button>
                 </div>

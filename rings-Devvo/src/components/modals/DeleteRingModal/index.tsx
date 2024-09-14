@@ -11,7 +11,7 @@ export function DeleteRingModal({
     title = "Deletar Anel",
 }: IDeleteRingModalProps) {
     const { ring, isloadingRing, errorRing } = useGetRingById(RingId);
-    const { deleteRing, isDeleteloading } = useDeleteRing();
+    const { mutate: deleteRing, isLoading: isDeleteloading } = useDeleteRing();
 
     const handleDelete = async () => {
         try {

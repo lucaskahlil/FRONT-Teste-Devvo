@@ -28,7 +28,7 @@ function PrevArrow(props: CustomArrowProps) {
 }
 
 export function RingCarousel() {
-    const { rings, loading, AllRingsError } = useGetAllRings();
+    const { data: rings, isLoading, isError, error } = useGetAllRings();
 
     const settings = {
         dots: true,
@@ -49,18 +49,18 @@ export function RingCarousel() {
         ]
     };
 
-    if (loading) {
+    if (isLoading) {
         return <Loading />;
     }
 
-    if (AllRingsError) {
-        return <ErrorCard message={AllRingsError} />;
+    if (isError && error instanceof Error) {
+        return <ErrorCard message={error.message} />;
     }
 
     return (
         <>
             <Slider {...settings} className="overflow-hidden">
-                {rings.map((ring) => (
+                {rings?.map((ring) => (
                     <div key={ring._id} className="flex justify-center">
                         <RingCard ring={ring} />
                     </div>

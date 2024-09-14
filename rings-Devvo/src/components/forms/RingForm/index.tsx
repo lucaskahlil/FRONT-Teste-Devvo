@@ -4,6 +4,7 @@ import { useCreateRing } from "../../../hooks";
 import { typeRingEnum } from "../../../enums";
 import { Button } from "../../ui/button";
 
+// Validação do formulário com Yup
 const RingFormSchema = Yup.object().shape({
     name: Yup.string().required("Nome é obrigatório"),
     power: Yup.string().required("Poder é obrigatório"),
@@ -15,7 +16,7 @@ const RingFormSchema = Yup.object().shape({
 });
 
 const RingForm: React.FC = () => {
-    const { createRing, loading } = useCreateRing();
+    const { mutate: createRing, isLoading, error } = useCreateRing();
 
     return (
         <Formik
@@ -28,11 +29,15 @@ const RingForm: React.FC = () => {
                 image: "https://i.imgur.com/Y5dTSXU.png"
             }}
             validationSchema={RingFormSchema}
-            onSubmit={async (values) => {
-                await createRing(values);
+            onSubmit={async (values, { resetForm }) => {
+                try {
+                    await createRing(values);
+                    resetForm();
+                } catch (err) {
+                    console.error(err);
+                }
             }}
         >
-
             <Form className="max-w-[500px] flex flex-col gap-5 mt-6">
                 <div className="flex flex-col gap-2 justify-normal">
                     <label htmlFor="name" className="font-inter text-sm font-medium leading-[18.48px] text-left text-white">Nome do Anel</label>
@@ -65,17 +70,19 @@ const RingForm: React.FC = () => {
                 <div className="flex flex-col gap-2 justify-normal">
                     <label htmlFor="type" className="font-inter text-sm font-medium leading-[18.48px] text-left text-white">Tipo de Anel</label>
                     <Field name="type" as="select" className="bg-zinc-800 h-12 pl-3 pr-3 rounded-lg text-white border border-solid border-gray-500">
-                        <option value="HUMAN">Humano</option>
-                        <option value="ELF">Elfo</option>
-                        <option value="DWARF">Anão</option>
-                        <option value="SAURON">Sauron</option>
+                        <option value={typeRingEnum[0]}>Humano</option>
+                        <option value={typeRingEnum[1]}>Elfo</option>
+                        <option value={typeRingEnum[2]}>Anão</option>
+                        <option value={typeRingEnum[3]}>Sauron</option>
                     </Field>
                     <ErrorMessage name="type" component="div" className="text-red-400" />
                 </div>
 
-                <Button type="submit" disabled={loading} className="bg-yellow-200 text-black hover:text-white">
-                    Forjar Anel
+                <Button type="submit" disabled={isLoading} className="bg-yellow-200 text-black hover:text-white">
+                    {isLoading ? "Forjando..." : "Forjar Anel"}
                 </Button>
+
+                {error && <div className="text-red-400">{error.message}</div>}
             </Form>
         </Formik>
     );
