@@ -32,13 +32,27 @@ export function RingCarousel() {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: (rings?.length ?? 0) > 1,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: Math.min(3, rings?.length || 1),
         slidesToScroll: 1,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
+        nextArrow: (rings?.length ?? 0) > 1 ? <NextArrow /> : null,
+        prevArrow: (rings?.length ?? 0) > 1 ? <PrevArrow /> : null,
         responsive: [
+            {
+                breakpoint: 1378, // Tamanho de tablet grande
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
             {
                 breakpoint: 768,
                 settings: {

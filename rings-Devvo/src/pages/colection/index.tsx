@@ -7,7 +7,7 @@ export function Colection() {
     return (
         <div
             className="bg-cover bg-center h-screen"
-            style={{ backgroundImage: `url(${backgroundImage})` }}
+            style={{ backgroundImage: `url(${backgroundImage})`, backgroundAttachment: 'fixed', }}
         >
             <Header />
             <div>
@@ -15,7 +15,7 @@ export function Colection() {
                     <h2 className="font-pattaya text-white text-4xl font-normal leading-tight">Coleção</h2>
                 </section>
 
-                <section className=" mpt-6 pb-6 pt-6 w-full h-full flex align-middle justify-center overflow-hidden ">
+                <section className=" mpt-6 pb-6 pt-6 w-full flex align-middle justify-center overflow-hidden ">
                     <RingCarousel />
                 </section>
             </div>

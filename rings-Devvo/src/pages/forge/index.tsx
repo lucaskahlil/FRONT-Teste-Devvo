@@ -10,10 +10,10 @@ export function Forge() {
         >
             <Header />
 
-            <div className="ml-20 mr-20 mt-6 mb-6 overflow-hidden">
-                <h2 className="font-pattaya text-white text-4xl font-normal leading-tight">Forja</h2>
+            <div className="px-4 md:px-20 mt-6 mb-6 overflow-hidden">
+                <h2 className="font-pattaya text-white text-4xl font-normal leading-tight text-center md:text-left">Forja</h2>
                 <RingForm />
             </div>
         </div>
-    )
+    );
 }
