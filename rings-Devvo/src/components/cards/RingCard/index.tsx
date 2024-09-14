@@ -40,13 +40,14 @@ export function RingCard({ ring }: IRingCardProps) {
             <DeleteRingModal
                 isOpen={isDeleteModalOpen}
                 onClose={closeModalDelete}
-                RingId={ring.id}
+                RingId={ring._id}
+                RingName={ring.name}
             />
 
             <EditRingModal
                 isOpen={isEditModalOpen}
                 onClose={closeModalEdit}
-                RingId={ring.id}
+                RingId={ring._id}
             />
         </>
     );

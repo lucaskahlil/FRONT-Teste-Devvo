@@ -61,7 +61,7 @@ export function RingCarousel() {
         <>
             <Slider {...settings} className="overflow-hidden">
                 {rings.map((ring) => (
-                    <div key={ring.id} className="flex justify-center">
+                    <div key={ring._id} className="flex justify-center">
                         <RingCard ring={ring} />
                     </div>
                 ))}

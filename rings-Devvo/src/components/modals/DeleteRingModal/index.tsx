@@ -23,15 +23,6 @@ export function DeleteRingModal({
             console.error(err);
         }
     };
-
-    if (isloadingRing) {
-        return <Loading />
-    }
-
-    if (errorRing) {
-        return <ErrorCard message={errorRing} />
-    }
-
     return (
         <Modal
             open={isOpen}
@@ -39,12 +30,17 @@ export function DeleteRingModal({
             title={title}
             footer={false}
         >
-            <div>Tem Certeza que deseja excluir o anel <strong>{ring?.name}</strong></div>
+            {errorRing ? (
+                <ErrorCard message={errorRing} />
+            ) : isloadingRing ? (
+                <Loading />
+            ) : (
+                <>Tem Certeza que deseja excluir o anel <strong>{ring?.name}</strong>?</>
+            )}
             <div className='w-full flex flex-row justify-end mt-6 gap-3'>
                 <Button disabled={isDeleteloading} onClick={onClose}>Cancelar</Button>
                 <Button disabled={!!errorRing} loading={isDeleteloading} onClick={handleDelete}>Excluir</Button>
             </div>
-            <div>RingID: {RingId}</div>
         </Modal>
     )
 }

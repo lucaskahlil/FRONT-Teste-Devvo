@@ -93,7 +93,7 @@ export const apiRings = {
 
   updateRing: async (
     RingId: string,
-    updatedRing: IRingDTOSchema
+    updatedRing: IRingFormSchema
   ): Promise<IRingDTOSchema> => {
     try {
       const response: AxiosResponse<IRingDTOSchema> = await api.patch(

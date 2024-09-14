@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IRingDTOSchema } from "../types";
+import { IRingFormSchema } from "../types";
 import { apiRings } from "../API/Rings";
 import { toast } from "react-toastify";
 
@@ -7,7 +7,7 @@ export const useUpdateRing = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateRing = async (id: string, ring: IRingDTOSchema) => {
+  const updateRing = async (id: string, ring: IRingFormSchema) => {
     setLoading(true);
     try {
       const data = await apiRings.updateRing(id, ring);
